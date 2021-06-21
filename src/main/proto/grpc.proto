@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.lattechiffon.grpc";
+option java_outer_classname = "Member";
+
+package grpc;
+
+enum Gender {
+  MALE = 0;
+  FEMALE = 1;
+}
+
+message Class {
+  int32 classNo = 1;
+  string className = 2;
+}
+
+message MemberRequest {
+  string name = 1;
+  Gender gender = 2;
+  string phoneNo = 3;
+  repeated Class classList = 4;
+}
+
+message MemberResponse {
+  int64 memberNo = 1;
+}
+
+service RegisterMember {
+  rpc Register(MemberRequest) returns (MemberResponse);
+  rpc RegisterClientStream(stream MemberRequest) returns (MemberResponse);
+  rpc RegisterServerStream(MemberRequest) returns (stream MemberResponse);
+  rpc RegisterBitStream(stream MemberRequest) returns (stream MemberResponse);
+}
